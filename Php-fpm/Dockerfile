@@ -3,6 +3,8 @@ FROM php:7.2-fpm
 MAINTAINER badtudou <badtudou@gmail.com>
 
 # Install all required packages.
+RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list 
+RUN sed -i "s/security.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list
 RUN apt-get update && \
   apt-get install \
 		git \
