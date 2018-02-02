@@ -9,3 +9,6 @@ WEB服务器
 
 编程语言
 - [x] [PHP](./Php-fpm 'PHP')
+
+数据库
+- [X] [MariaDB](./MariaDB 'MariaDB')

@@ -11,14 +11,31 @@ services:
             - ./Nginx/conf/conf.d:/etc/nginx/conf.d
         links:
             - phpfpm:phpfpm
+
         networks:
             - code-network
     phpfpm:
         build: ./Php-fpm
         ports:
             - "9000:9000"
+        links:
+            - mariadb:db
         volumes:
             - ./Nginx/www:/usr/share/nginx/html
+        networks:
+            - code-network
+
+    mariadb:
+        build: ./MariaDB
+        restart: always
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./MariaDb/data:/var/lib/mysql
+            - ./MariaDb/conf/conf.d:/etc/mysql/conf.d
+        environment:
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: root
         networks:
             - code-network
 
