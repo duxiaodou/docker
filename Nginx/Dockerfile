@@ -13,3 +13,5 @@ COPY ./conf/conf.d /etc/nginx/conf.d
 VOLUME ["/www"] 
 
 EXPOSE 80
+
+EXPOSE 443
