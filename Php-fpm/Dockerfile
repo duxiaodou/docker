@@ -1,79 +1,19 @@
-FROM php:7.2-fpm
+FROM php:7.1-fpm
+
 
 MAINTAINER badtudou <badtudou@gmail.com>
 
 # Install all required packages.
-RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list 
-RUN sed -i "s/security.debian.org/mirrors.aliyun.com\/debian-security/g" /etc/apt/sources.list
-RUN apt-get update --fix-missing && \
-  apt-get install \
-		git \
-		libldap2-dev \
-		libcurl4-gnutls-dev \
-		curl \
-		libicu-dev \
-		libmcrypt-dev \
-		libvpx-dev \
-		libjpeg-dev \
-		libpng-dev \
-		libxpm-dev \
-		zlib1g-dev \
-		libfreetype6-dev \
-		libxml2-dev \
-		libexpat1-dev \
-		libbz2-dev \
-		libgmp3-dev \
-		libldap2-dev \
-		unixodbc-dev \
-		libpq-dev \
-		libsqlite3-dev \
-		libaspell-dev \
-		libsnmp-dev \
-		libpcre3-dev \
-		libtidy-dev \
-		build-essential \
-		libkrb5-dev \
-		libedit-dev \
-		libedit2 \
-		gcc \
-		make \
-		python2.7-dev \
-		python-pip \
-		re2c \
-		wget \
-		sqlite3 \
-		libmemcached-dev \
-		libc-client-dev -yqq \
-	&& rm -rf /var/lib/apt/lists/* 
-# Compile PHP, include these extensions.
-RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ 
-RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos --with-imap
-RUN docker-php-ext-install mbstring \
-   pdo_mysql \
-   json \
-   intl \
-   gd \
-   xml \
-   zip \
-   bz2 \
-   opcache \
-   pgsql \
-   pdo_sqlite\
-   intl \
-   bcmath \
-   soap \
-   ldap \
-   imap \
-   readline
-
-# Compile and install APCu
-RUN pecl install apcu \
-    && docker-php-ext-enable apcu
-
-#install Imagemagick & PHP Imagick ext
+RUN sed -i "s/deb.debian.org/mirrors.ustc.edu.cn/g" /etc/apt/sources.list 
+RUN sed -i 's/security.debian.org/mirrors.ustc.edu.cn\/debian-security/g' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y \
-  libmagickwand-dev --no-install-recommends
-RUN pecl install imagick && docker-php-ext-enable imagick
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt zip pdo_mysql mbstring\
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
 
 COPY ./conf/php.ini /etc/php.ini
 
@@ -90,5 +30,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 && php -r "unlink('composer-setup.php');" \
 && mv composer.phar /usr/local/bin/composer \
 && composer config -g repo.packagist composer https://packagist.phpcomposer.com
-
 EXPOSE 9000
