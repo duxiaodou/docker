@@ -5,6 +5,7 @@ services:
         ports:
             - "80:80"
             - "443:443"
+            - "8080:8080"
         volumes:
             - ./Nginx/www:/usr/share/nginx/html
             - ./Nginx/logs:/var/log/nginx
@@ -18,7 +19,6 @@ services:
         build: ./Php-fpm
         ports:
             - "9000:9000"
-            - "8080:8080"
         links:
             - mariadb:db
         volumes:
