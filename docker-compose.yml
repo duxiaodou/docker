@@ -40,6 +40,30 @@ services:
         networks:
             - code-network
 
+    redis:
+        build: ./Redis
+        restart: always
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./Redis/data:/data
+        environment:
+            REDIS_PASSWORD: redis
+        networks:
+            - code-network
+
+    rabbitmq:
+        build: ./RabbitMQ
+        restart: always
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: rabbitmq
+            RABBITMQ_DEFAULT_PASS: password
+        networks:
+            - code-network
+
     supervisor:
         build: ./Supervisor
         volumes:

@@ -18,3 +18,6 @@ WEB服务器
 
 进程监控
 - [X] [Supervisor](./Supervisor 'Supervisor')
+
+消息队列
+- [X] [RabbitMQ](./RabbitMQ 'RabbitMQ')
