@@ -8,7 +8,8 @@ WEB服务器
 - [x] [Nginx](./Nginx 'Nginx')
 
 编程语言
-- [x] [PHP(Composer)](./Php-fpm 'PHP')
+- [x] [PHP(Laravel)](./Php-fpm 'PHP')
+- [x] [Ruby(Rails)](./Rails 'Ruby')
 
 数据库
 - [X] [MariaDB](./MariaDB 'MariaDB')
