@@ -5,7 +5,6 @@ services:
         ports:
             - "80:80"
             - "443:443"
-            - "8080:8080"
         volumes:
             - ./Nginx/www:/usr/share/nginx/html
             - ./Nginx/logs:/var/log/nginx
@@ -14,7 +13,7 @@ services:
         networks:
             - code-network
         depends_on:
-        #    - rails
+            - rails
         #    - phpfpm
 
     # phpfpm:
@@ -30,7 +29,7 @@ services:
 
     rails:
         build: ./Rails
-        command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+        command: /bin/sh -c "rm -f tmp/pids/server.pid &&  bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
         ports:
             - "3000:3000"
         volumes:
@@ -97,6 +96,17 @@ services:
     #         - ./Cron/logs:/var/log/cron
     #     networks:
     #         - code-network
+
+    jenkins:
+        build: ./Jenkins
+        ports:
+            - "8080:8080"
+            - "50000:50000"
+        volumes:
+            - ./Nginx/www:/var/jenkins_home/workshop
+            - ./Jenkins:/var/jenkins_home
+        networks:
+            - code-network
 
 
 networks:

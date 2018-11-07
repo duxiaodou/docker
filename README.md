@@ -22,3 +22,6 @@ WEB服务器
 
 消息队列
 - [X] [RabbitMQ](./RabbitMQ 'RabbitMQ')
+
+持续集成工具
+- [X] [Jenkins](./Jenkins 'Jenkins')
