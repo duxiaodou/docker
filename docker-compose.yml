@@ -104,7 +104,7 @@ services:
             - "50000:50000"
         volumes:
             - ./Nginx/www:/var/jenkins_home/workshop
-            - ./Jenkins:/var/jenkins_home
+            - ./Jenkins/data:/var/jenkins_home
         networks:
             - code-network
 
