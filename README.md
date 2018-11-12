@@ -25,3 +25,4 @@ WEB服务器
 
 持续集成工具
 - [X] [Jenkins](./Jenkins 'Jenkins')
+- [X] [Gitlab runner](./Gitlab-runner 'Gitlab runner')
