@@ -28,5 +28,6 @@ RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '93b54496392c06277
 RUN php composer-setup.php --install-dir=/bin --filename=composer
 RUN php -r "unlink('composer-setup.php');" \
 && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
-&& composer global require laravel/installer
+&& composer global require "laravel/installer" \
+&& echo export PATH="~/.composer/vendor/bin:$PATH" >> ~/.bashrc
 EXPOSE 9000
