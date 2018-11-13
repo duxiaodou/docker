@@ -30,4 +30,6 @@ RUN php -r "unlink('composer-setup.php');" \
 && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
 && composer global require "laravel/installer" \
 && echo export PATH="~/.composer/vendor/bin:$PATH" >> ~/.bashrc
+
+WORKDIR "/usr/share/nginx/html"
 EXPOSE 9000
