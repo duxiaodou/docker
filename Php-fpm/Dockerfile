@@ -40,10 +40,8 @@ WORKDIR "/usr/share/nginx/html"
 # Define mountable directories.
 VOLUME ["/etc/supervisor/conf.d"]
 
-# Define working directory.
-WORKDIR /etc/supervisor/conf.d
-
 # Define default command.
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-
 EXPOSE 9000
+
+CMD ["supervisord"]
+
