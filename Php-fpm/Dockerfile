@@ -10,10 +10,13 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         zip \
+        supervisor \
         #libpng12-dev \
     && docker-php-ext-install -j$(nproc) iconv mcrypt zip pdo_mysql mbstring bcmath zip\
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) gd \
+    && rm -rf /var/lib/apt/lists/* \
+    && sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 
 COPY ./conf/php.ini /etc/php.ini
 
@@ -33,4 +36,14 @@ RUN php -r "unlink('composer-setup.php');" \
 && echo export PATH="~/.composer/vendor/bin:$PATH" >> ~/.bashrc
 
 WORKDIR "/usr/share/nginx/html"
+
+# Define mountable directories.
+VOLUME ["/etc/supervisor/conf.d"]
+
+# Define working directory.
+WORKDIR /etc/supervisor/conf.d
+
+# Define default command.
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
 EXPOSE 9000
