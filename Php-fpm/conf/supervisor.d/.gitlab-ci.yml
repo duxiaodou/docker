@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+deploy:
+  only:
+    - develop
+  stage: deploy
+  retry: 2
+  script: 
+    - cp -r -f -v ./ /etc/supervisor/conf.d

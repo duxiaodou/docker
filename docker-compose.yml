@@ -25,6 +25,7 @@ services:
     #     volumes:
     #         - ./Nginx/www:/usr/share/nginx/html
     #         - ./Php-fpm/conf/supervisor.d:/etc/supervisor/conf.d
+    #         - ./Php-fpm/conf/cron.d:/etc/cron.d
     #     networks:
     #         - code-network
 
