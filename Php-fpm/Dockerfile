@@ -38,7 +38,6 @@ RUN php -r "unlink('composer-setup.php');" \
 
 # Run the command on container startup
 COPY ./conf/cron.d /etc/cron.d
-RUN chmod 0644 /etc/cron.d/*
 
 WORKDIR "/usr/share/nginx/html"
 
