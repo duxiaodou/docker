@@ -41,6 +41,9 @@ COPY ./conf/cron.d /etc/cron.d
 
 WORKDIR "/usr/share/nginx/html"
 
+RUN chown -R www-data:www-data /usr/share/nginx/html \
+&& chmod -R g+rwX /usr/share/nginx/html
+
 # Define mountable directories.
 VOLUME ["/etc/supervisor/conf.d"]
 
