@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
         libmcrypt-dev \
         zip \
         supervisor \
-        cron \
         wget \
+        cron \
         #libpng12-dev \
     && docker-php-ext-install -j$(nproc) iconv mcrypt zip pdo_mysql mbstring bcmath zip opcache\
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -29,8 +29,9 @@ COPY ./conf/php-fpm.d /etc/php-fpm.d
 COPY ./conf/php-fpm.conf /etc/php-fpm.conf
 
 #install Composer
+#RUN curl -sS http://getcomposer.org/installer | php \
+#&& mv composer.phar /usr/local/bin/composer \
 RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
-RUN php -r "unlink('composer-setup.php');" \
 && mv composer.phar /usr/local/bin/composer \
 && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
 && composer global require "laravel/installer" \
@@ -54,4 +55,3 @@ VOLUME ["/etc/cron.d"]
 EXPOSE 9000
 
 CMD ["supervisord"]
-
